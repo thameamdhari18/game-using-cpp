@@ -5,68 +5,39 @@
 using namespace std;
 
 int main() {
-    srand(time(nullptr)); // Seed the random number generator
+    srand(time(0)); // Initialize random seed
 
-    // Generate a secret number between 1 and 100
-    const int MIN_SECRET_NUMBER = 1;
-    const int MAX_SECRET_NUMBER = 100;
-    int secretNumber = rand() % (MAX_SECRET_NUMBER - MIN_SECRET_NUMBER + 1) + MIN_SECRET_NUMBER;
+    int secretNumber = rand() % 1000 + 1 ; // Generate secret number between 1 and 100
+    int guess;
+    int chances;
 
-    // Define difficulty levels
-    struct Difficulty {
-        int value;
-        int chances;
-    };
-
-    Difficulty difficulties[] = {
-        {1, 10}, // Easy
-        {2, 7},  // Medium
-        {3, 5}   // Hard
-    };
-
-    // Display welcome message and prompt user to choose difficulty
     cout << "Welcome to the Number Guessing Game!" << endl;
     cout << "Choose the level of difficulty:" << endl;
-    for (const auto &difficulty : difficulties) {
-        cout << difficulty.value << ". ";
-        switch (difficulty.value) {
-            case 1:
-                cout << "Easy (" << difficulty.chances << " chances)" << endl;
-                break;
-            case 2:
-                cout << "Medium (" << difficulty.chances << " chances)" << endl;
-                break;
-            case 3:
-                cout << "Hard (" << difficulty.chances << " chances)" << endl;
-                break;
-        }
-    }
-
-    int chosenDifficulty;
+    cout << "1. Easy (10 chances)" << endl;
+    cout << "2. Medium (7 chances)" << endl;
+    cout << "3. Hard (5 chances)" << endl;
     cout << "Enter your choice: ";
-    cin >> chosenDifficulty;
+    cin >> chances;
 
-    // Validate user input and retrieve the number of chances
-    int chances;
-    for (const auto &difficulty : difficulties) {
-        if (chosenDifficulty == difficulty.value) {
-            chances = difficulty.chances;
+    switch (chances) {
+        case 1:
+            chances = 10;
             break;
-        }
+        case 2:
+            chances = 7;
+            break;
+        case 3:
+            chances = 5;
+            break;
+        default:
+            cout << "Invalid choice. Exiting the game." << endl;
+            return 0;
     }
 
-    // If the chosen difficulty is not valid, exit the game
-    if (chances == 0) {
-        cout << "Invalid choice. Exiting the game." << endl;
-        return 0;
-    }
+    cout << "Guess the secret number between 1 and 1000." << endl;
 
-    cout << "Guess the secret number between " << MIN_SECRET_NUMBER << " and " << MAX_SECRET_NUMBER << "." << endl;
-
-    // Game loop
-    for (int attempt = 1; attempt <= chances; ++attempt) {
-        int guess;
-        cout << "Attempt " << attempt << ": Enter your guess: ";
+    for (int i = 1; i <= chances; ++i) {
+        cout << "Attempt " << i << ": Enter your guess: ";
         cin >> guess;
 
         if (guess == secretNumber) {
@@ -79,7 +50,6 @@ int main() {
         }
     }
 
-    // Display the secret number and thank the player for playing
     cout << "The secret number was: " << secretNumber << endl;
     cout << "Thanks for playing!" << endl;
 
